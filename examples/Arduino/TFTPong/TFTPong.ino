@@ -121,8 +121,8 @@ void moveBall() {
 
 // this function checks the position of the ball
 // to see if it intersects with the paddle
-boolean inPaddle(int x, int y, int rectX, int rectY, int rectWidth, int rectHeight) {
-  boolean result = false;
+bool inPaddle(int x, int y, int rectX, int rectY, int rectWidth, int rectHeight) {
+  bool result = false;
 
   if ((x >= rectX && x <= (rectX + rectWidth)) &&
       (y >= rectY && y <= (rectY + rectHeight))) {
