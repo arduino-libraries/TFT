@@ -7,7 +7,7 @@
  
   Check out the links above for our tutorials and wiring diagrams
   These displays use SPI to communicate, 4 or 5 pins are required to
-  interface (RST is optional)
+  interface (rst_pin is optional)
   Adafruit invests time and resources providing this open source code,
   please support Adafruit and open-source hardware by purchasing
   products from Adafruit!
@@ -98,9 +98,9 @@ class Adafruit_ST7735 : public Adafruit_GFX {
 
  public:
 
-  Adafruit_ST7735(uint8_t CS, uint8_t RS, uint8_t SID, uint8_t SCLK,
-    uint8_t RST);
-  Adafruit_ST7735(uint8_t CS, uint8_t RS, uint8_t RST);
+  Adafruit_ST7735(uint8_t cs_pin, uint8_t rs_pin, uint8_t sid_pin, uint8_t sclk_pin,
+    uint8_t rst_pin);
+  Adafruit_ST7735(uint8_t cs_pin, uint8_t rs_pin, uint8_t rst_pin);
 
   void     initB(void),                             // for ST7735B displays
            initG(void),                             // for ILI9163C displays

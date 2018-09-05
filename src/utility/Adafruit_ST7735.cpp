@@ -7,7 +7,7 @@
  
   Check out the links above for our tutorials and wiring diagrams
   These displays use SPI to communicate, 4 or 5 pins are required to
-  interface (RST is optional)
+  interface (rst is optional)
   Adafruit invests time and resources providing this open source code,
   please support Adafruit and open-source hardware by purchasing
   products from Adafruit!
@@ -29,26 +29,26 @@ inline uint16_t swapcolor(uint16_t x) {
 
 
 // Constructor when using software SPI.  All output pins are configurable.
-Adafruit_ST7735::Adafruit_ST7735(uint8_t cs, uint8_t rs, uint8_t sid,
- uint8_t sclk, uint8_t rst) : Adafruit_GFX(ST7735_TFTWIDTH, ST7735_TFTHEIGHT) 
+Adafruit_ST7735::Adafruit_ST7735(uint8_t cs_pin, uint8_t rs_pin, uint8_t sid_pin,
+ uint8_t sclk_pin, uint8_t rst_pin) : Adafruit_GFX(ST7735_TFTWIDTH, ST7735_TFTHEIGHT)
 {
-  _cs   = cs;
-  _rs   = rs;
-  _sid  = sid;
-  _sclk = sclk;
-  _rst  = rst;
+  _cs   = cs_pin;
+  _rs   = rs_pin;
+  _sid  = sid_pin;
+  _sclk = sclk_pin;
+  _rst  = rst_pin;
   hwSPI = false;
 }
 
 
 // Constructor when using hardware SPI.  Faster, but must use SPI pins
 // specific to each board type (e.g. 11,13 for Uno, 51,52 for Mega, etc.)
-Adafruit_ST7735::Adafruit_ST7735(uint8_t cs, uint8_t rs, uint8_t rst) : 
+Adafruit_ST7735::Adafruit_ST7735(uint8_t cs_pin, uint8_t rs_pin, uint8_t rst_pin) :
 Adafruit_GFX(ST7735_TFTWIDTH, ST7735_TFTHEIGHT) 
 {
-  _cs   = cs;
-  _rs   = rs;
-  _rst  = rst;
+  _cs   = cs_pin;
+  _rs   = rs_pin;
+  _rst  = rst_pin;
   hwSPI = true;
   _sid  = _sclk = 0;
 }
@@ -375,7 +375,7 @@ void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
     *dataport  &= ~datapinmask;
   }
 
-  // toggle RST low to reset; CS low so it'll listen to us
+  // toggle rst low to reset; cs low so it'll listen to us
   *csport &= ~cspinmask;
   if (_rst) {
     pinMode(_rst, OUTPUT);
