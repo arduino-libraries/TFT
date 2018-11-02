@@ -1,5 +1,5 @@
 #if !defined(ARDUINO_ARCH_SAM) && !defined(__ARDUINO_ARC__) && \
-    !defined(ARDUINO_ARCH_STM32)
+    !defined(ARDUINO_ARCH_STM32) && !defined(ARDUINO_spresense_ast)
 #include <avr/io.h>
 #endif
 #include <avr/pgmspace.h> 
