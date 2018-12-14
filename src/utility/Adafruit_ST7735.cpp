@@ -47,6 +47,8 @@
 #endif
 
 
+
+
 inline uint16_t swapcolor(uint16_t x) {
   return (x << 11) | (x & 0x07E0) | (x >> 11);
 }
@@ -156,7 +158,7 @@ PROGMEM const static unsigned char
       0x03,                   //     3 lines back porch
       10,                     //     10 ms delay
     ST7735_MADCTL , 1      ,  //  5: Memory access ctrl (directions), 1 arg:
-      0x08,                   //     Row addr/col addr, bottom to top refresh
+      0x00,                   //     Row addr/col addr, bottom to top refresh
     ST7735_DISSET5, 2      ,  //  6: Display settings #5, 2 args, no delay:
       0x15,                   //     1 clk cycle nonoverlap, 2 cycle gate
                               //     rise, 3 cycle osc equalize
@@ -233,7 +235,7 @@ PROGMEM const static unsigned char
       0x0E,
     ST7735_INVOFF , 0      ,  // 13: Don't invert display, no args, no delay
     ST7735_MADCTL , 1      ,  // 14: Memory access control (directions), 1 arg:
-      0xC8,                   //     row addr/col addr, bottom to top refresh
+      0xC0,                   //     row addr/col addr, bottom to top refresh
     ST7735_COLMOD , 1      ,  // 15: set color mode, 1 arg, no delay:
       0x05 },                 //     16-bit color
 
@@ -361,6 +363,7 @@ void Adafruit_ST7735::commandList(const uint8_t *addr) {
 void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
 
   colstart  = rowstart = 0; // May be overridden in init func
+  buf = NULL;
 
   pinMode(_rs, OUTPUT);
   pinMode(_cs, OUTPUT);
@@ -378,7 +381,7 @@ void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
 #ifdef SPI_HAS_TRANSACTION
 
 #ifdef ARDUINO_spresense_ast
-    spisettings = SPISettings(10000000L, MSBFIRST, SPI_MODE0);
+    spisettings = SPISettings(11000000L, MSBFIRST, SPI_MODE0);
 #else
     spisettings = SPISettings(4000000L, MSBFIRST, SPI_MODE0);
 #endif
@@ -488,29 +491,54 @@ void Adafruit_ST7735::pushColor(uint16_t color) {
 #endif
 }
 
+
+void Adafruit_ST7735::setBuf(uint16_t* buf, uint16_t w, uint16_t h) {
+    if (buf) {
+        this->buf = buf;
+        this->w = w;
+        this->h = h;
+    } else {
+        buf = NULL;
+    }
+}
+
+void Adafruit_ST7735::setBuf(uint16_t* buf) {
+    setBuf(buf, _width,_height);
+}
+
 void Adafruit_ST7735::drawPixel(int16_t x, int16_t y, uint16_t color) {
 
   if((x < 0) ||(x >= _width) || (y < 0) || (y >= _height)) return;
 
-  setAddrWindow(x,y,x+1,y+1);
+  if (buf) {
+      buf[(y * this->w) + x] = SWAP_ENDIAN_16(color);
+  } else {
 
-#ifdef SPI_HAS_TRANSACTION
-  if (hwSPI) SPI.beginTransaction(spisettings);
-#endif
+    setAddrWindow(x,y,x+1,y+1);
 
-  RS_HIGH
-  CS_LOW
+    #ifdef SPI_HAS_TRANSACTION
+    if (hwSPI) SPI.beginTransaction(spisettings);
+    #endif
 
-  if (tabcolor == INITR_BLACKTAB)   color = swapcolor(color);
+    RS_HIGH
+    CS_LOW
 
-  spiwrite(color >> 8);
-  spiwrite(color);
+    if (tabcolor == INITR_BLACKTAB)   color = swapcolor(color);
 
-  CS_HIGH
 
-#ifdef SPI_HAS_TRANSACTION
-  if (hwSPI) SPI.endTransaction();
-#endif
+    #if defined(ARDUINO_spresense_ast)
+        SPI.transfer16(color);
+    #else
+    spiwrite(color >> 8);
+    spiwrite(color);
+    #endif
+
+    CS_HIGH
+
+    #ifdef SPI_HAS_TRANSACTION
+    if (hwSPI) SPI.endTransaction();
+    #endif
+  }
 }
 
 
@@ -520,6 +548,14 @@ void Adafruit_ST7735::drawFastVLine(int16_t x, int16_t y, int16_t h,
   // Rudimentary clipping
   if((x >= _width) || (y >= _height)) return;
   if((y+h-1) >= _height) h = _height-y;
+
+    if (buf) {
+      while(h--)
+      {
+          drawPixel(x, y+h, color);
+      }
+      return;
+  }
   setAddrWindow(x, y, x, y+h-1);
 
   if (tabcolor == INITR_BLACKTAB)   color = swapcolor(color);
@@ -533,8 +569,12 @@ void Adafruit_ST7735::drawFastVLine(int16_t x, int16_t y, int16_t h,
   CS_LOW
 
   while (h--) {
-    spiwrite(hi);
-    spiwrite(lo);
+#if defined(ARDUINO_spresense_ast)
+    SPI.transfer16(color);
+#else
+      spiwrite(hi);
+      spiwrite(lo);
+#endif
   }
 
   CS_LOW
@@ -551,6 +591,15 @@ void Adafruit_ST7735::drawFastHLine(int16_t x, int16_t y, int16_t w,
   // Rudimentary clipping
   if((x >= _width) || (y >= _height)) return;
   if((x+w-1) >= _width)  w = _width-x;
+
+      if (buf) {
+      while(w--)
+      {
+          drawPixel(x+w, y, color);
+      }
+      return;
+  }
+
   setAddrWindow(x, y, x+w-1, y);
 
   if (tabcolor == INITR_BLACKTAB)   color = swapcolor(color);
@@ -564,8 +613,12 @@ void Adafruit_ST7735::drawFastHLine(int16_t x, int16_t y, int16_t w,
   CS_LOW
 
   while (w--) {
-    spiwrite(hi);
-    spiwrite(lo);
+#if defined(ARDUINO_spresense_ast)
+    SPI.transfer16(color);
+#else
+      spiwrite(hi);
+      spiwrite(lo);
+#endif
   }
 
   CS_HIGH
@@ -582,6 +635,26 @@ void Adafruit_ST7735::fillScreen(uint16_t color) {
 }
 
 
+void Adafruit_ST7735::writeBuf() {
+
+  setAddrWindow(0, 0, _width, _height);
+
+#ifdef SPI_HAS_TRANSACTION
+  if (hwSPI) SPI.beginTransaction(spisettings);
+#endif
+
+  RS_HIGH
+  CS_LOW
+
+  SPI.transfer(buf, _width * _height * 2);
+
+  CS_HIGH
+
+#ifdef SPI_HAS_TRANSACTION
+  if (hwSPI) SPI.endTransaction();
+#endif
+  buf = NULL;
+}
 
 // fill a rectangle
 void Adafruit_ST7735::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
@@ -594,6 +667,16 @@ void Adafruit_ST7735::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
 
   if (tabcolor == INITR_BLACKTAB)   color = swapcolor(color);
 
+    if (buf) {
+        uint16_t lx, ly;
+        for (ly = y; ly < (y + h); ly++){
+            for (lx = x; lx < (x + w); lx++) {
+                buf[(ly * this->w) + lx] = swapcolor(color);
+            }
+        }
+
+  } else {
+
   setAddrWindow(x, y, x+w-1, y+h-1);
 
   uint8_t hi = color >> 8, lo = color;
@@ -604,10 +687,15 @@ void Adafruit_ST7735::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
   RS_HIGH
   CS_LOW
 
+
   for(y=h; y>0; y--) {
     for(x=w; x>0; x--) {
+#if defined(ARDUINO_spresense_ast)
+    SPI.transfer16(color);
+#else
       spiwrite(hi);
       spiwrite(lo);
+#endif
     }
   }
 
@@ -616,6 +704,7 @@ void Adafruit_ST7735::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
 #ifdef SPI_HAS_TRANSACTION
   if (hwSPI) SPI.endTransaction();
 #endif
+  }
 }
 
 
@@ -623,8 +712,18 @@ void Adafruit_ST7735::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
 #define MADCTL_MX  0x40
 #define MADCTL_MV  0x20
 #define MADCTL_ML  0x10
-#define MADCTL_RGB 0x08
+
+#define RGB 0x80
+#define BGR 0x00
+
+#ifdef ARDUINO_spresense_ast
+#define MADCTL_RGB BGR
+#else
+#define MADCTL_RGB RGB
+#endif
+
 #define MADCTL_MH  0x04
+
 
 void Adafruit_ST7735::setRotation(uint8_t m) {
 
@@ -660,118 +759,4 @@ void Adafruit_ST7735::invertDisplay(boolean i) {
 }
 
 
-////////// stuff not actively being used, but kept for posterity
-/*
 
- uint8_t Adafruit_ST7735::spiread(void) {
- uint8_t r = 0;
- if (_sid > 0) {
- r = shiftIn(_sid, _sclk, MSBFIRST);
- } else {
- //SID_DDR &= ~_BV(SID);
- //int8_t i;
- //for (i=7; i>=0; i--) {
- //  SCLK_PORT &= ~_BV(SCLK);
- //  r <<= 1;
- //  r |= (SID_PIN >> SID) & 0x1;
- //  SCLK_PORT |= _BV(SCLK);
- //}
- //SID_DDR |= _BV(SID);
-
- }
- return r;
- }
-
-
- void Adafruit_ST7735::dummyclock(void) {
-
- if (_sid > 0) {
- digitalWrite(_sclk, LOW);
- digitalWrite(_sclk, HIGH);
- } else {
- // SCLK_PORT &= ~_BV(SCLK);
- //SCLK_PORT |= _BV(SCLK);
- }
- }
- uint8_t Adafruit_ST7735::readdata(void) {
- *portOutputRegister(rsport) |= rspin;
-
- *portOutputRegister(csport) &= ~ cspin;
-
- uint8_t r = spiread();
-
- *portOutputRegister(csport) |= cspin;
-
- return r;
-
- }
-
- uint8_t Adafruit_ST7735::readcommand8(uint8_t c) {
- digitalWrite(_rs, LOW);
-
- *portOutputRegister(csport) &= ~ cspin;
-
- spiwrite(c);
-
- digitalWrite(_rs, HIGH);
-#elif ARDUINO_spresense_ast
-
-  fast_digital_write(_rs_addr, HIGH);
-
-#else
- pinMode(_sid, INPUT); // input!
- digitalWrite(_sid, LOW); // low
- spiread();
- uint8_t r = spiread();
-
-
- *portOutputRegister(csport) |= cspin;
-
-
- pinMode(_sid, OUTPUT); // back to output
- return r;
- }
-
-
- uint16_t Adafruit_ST7735::readcommand16(uint8_t c) {
- digitalWrite(_rs, LOW);
- if (_cs)
- digitalWrite(_cs, LOW);
-
- spiwrite(c);
- pinMode(_sid, INPUT); // input!
- uint16_t r = spiread();
- r <<= 8;
- r |= spiread();
- if (_cs)
- digitalWrite(_cs, HIGH);
-
- pinMode(_sid, OUTPUT); // back to output
- return r;
- }
-
- uint32_t Adafruit_ST7735::readcommand32(uint8_t c) {
- digitalWrite(_rs, LOW);
- if (_cs)
- digitalWrite(_cs, LOW);
- spiwrite(c);
- pinMode(_sid, INPUT); // input!
-
- dummyclock();
- dummyclock();
-
- uint32_t r = spiread();
- r <<= 8;
- r |= spiread();
- r <<= 8;
- r |= spiread();
- r <<= 8;
- r |= spiread();
- if (_cs)
- digitalWrite(_cs, HIGH);
-
- pinMode(_sid, OUTPUT); // back to output
- return r;
- }
-
- */

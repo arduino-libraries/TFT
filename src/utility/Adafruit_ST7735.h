@@ -98,11 +98,16 @@
 #define ST7735_YELLOW  0xFFE0
 #define ST7735_WHITE   0xFFFF
 
+#define BUF_SIZE ST7735_TFTWIDTH * ST7735_TFTHEIGHT * sizeof(uint32_t)
+
+#define SWAP_ENDIAN_16(x) (x >> 8 | x << 8)
 
 class Adafruit_ST7735 : public Adafruit_GFX {
 
  public:
-
+    void setBuf(uint16_t* buf, uint16_t w, uint16_t h);
+    void setBuf(uint16_t* buf);
+    void writeBuf();
   Adafruit_ST7735(uint8_t CS, uint8_t RS, uint8_t SID, uint8_t SCLK,
     uint8_t RST);
   Adafruit_ST7735(uint8_t CS, uint8_t RS, uint8_t RST);
@@ -131,6 +136,7 @@ class Adafruit_ST7735 : public Adafruit_GFX {
   */
 
  private:
+  uint16_t *buf;
   uint8_t  tabcolor;
 
   void     spiwrite(uint8_t),
@@ -158,6 +164,8 @@ class Adafruit_ST7735 : public Adafruit_GFX {
   #ifdef ARDUINO_spresense_ast
          uint32_t _cs_addr;
          uint32_t _rs_addr;
+         uint16_t w;
+         uint16_t h;
   #endif
  #endif
 };
