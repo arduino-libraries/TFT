@@ -160,7 +160,7 @@ void Adafruit_GFX::fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
   }
 }
 
-// Bresenham's algorithm - thx wikipedia
+// Bresenham's algorithm - thx wikpedia
 void Adafruit_GFX::drawLine(int16_t x0, int16_t y0, 
 			    int16_t x1, int16_t y1, 
 			    uint16_t color) 
@@ -654,6 +654,40 @@ void Adafruit_GFX::triangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int1
     drawTriangle(x1, y1, x2, y2, x3, y3, strokeColor);
   }
 }
+
+// draw a arc outline
+void Adafruit_GFX::drawArc(int16_t x, int16_t y, int16_t r, int16_t st_angle, int16_t end_angle,uint16_t color)
+{
+  
+ float angle;
+float range;
+float h;
+float k;
+ angle=(((st_angle<=end_angle)?st_angle:end_angle)*(PI/180));
+ range=(((end_angle>st_angle)?end_angle:st_angle)*(PI/180));
+
+ h=(r*cos(angle));
+ k=(r*sin(angle));
+
+ do {
+    drawPixel((int16_t)(x+h+0.5),(int16_t)(y-k+0.5) ,strokeColor);
+
+    angle = angle + 0.001;
+    h=(r*cos(angle));
+    k=(r*sin(angle));
+   
+    } while (angle<=range);
+ 
+
+}
+// draw a arc outline
+void Adafruit_GFX::arc(int16_t x, int16_t y, int16_t r, int16_t st_angle, int16_t end_angle)
+{
+
+ drawArc(x,y,r,st_angle,end_angle,strokeColor);
+
+}
+
 
 #if defined(__SD_H__)  // Arduino SD library
 
