@@ -1,13 +1,11 @@
 /* TFTCircle
 
   by K.Abhijeet
-
   This example code takes input radius from serial and prints the circle to the screen.
 */
 
 #include <TFT.h>  // Arduino LCD library
 #include <SPI.h>
-
 
 // pin definition for the Uno
 #define cs   10
@@ -21,8 +19,6 @@
 
 // create an instance of the library
 TFT TFTscreen = TFT(cs, dc, rst);
-
-
 
 int red;
 
@@ -39,18 +35,17 @@ void setup() {
   // set the font color to white
   TFTscreen.stroke(255, 255, 255);
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter radius :");
   //waiting for input
   while (Serial.available() == 0) {}
   red = Serial.parseInt();
 
- 
   TFTscreen.setTextSize(1);
   TFTscreen.text("Your circle : ", 2, 0);
 
   TFTscreen.fill(255, 255, 0);
-  TFTscreen.circle( TFTscreen.width()/2,  TFTscreen.height()/2, red); // draw circle
+  TFTscreen.circle( TFTscreen.width() / 2,  TFTscreen.height() / 2, red); // draw circle
 }
 
 void loop() {}

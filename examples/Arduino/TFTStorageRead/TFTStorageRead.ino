@@ -1,10 +1,10 @@
 /*
   TFTStorageRead
 
-  This example shows how to read  data  from an SD card file and prints it to the screen.
+  This example shows how to read data from an SD card file and prints it to the screen.
 
   The circuit:
-   SD card attached to SPI bus as follows:
+  SD card attached to SPI bus as follows:
  ** MOSI - pin 11
  ** MISO - pin 12
  ** CLK - pin 13
@@ -17,14 +17,12 @@
 
   created by Abhijeet Kadam
   This example code is in the public domain.
-
 */
 
 // pin definition for the Uno
 #define cs   10
 #define dc   9
 #define rst  8
-
 
 #include <TFT.h>  // Arduino LCD library
 #include <SPI.h>

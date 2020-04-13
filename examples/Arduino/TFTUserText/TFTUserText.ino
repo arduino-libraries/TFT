@@ -1,10 +1,8 @@
 /* UserText
 
   by K.Abhijeet
-
   This example code takes input username from serial and prints to the screen.
 */
-
 #include <TFT.h>  // Arduino LCD library
 #include <SPI.h>
 
@@ -39,7 +37,7 @@ void setup() {
   TFTscreen.stroke(255, 255, 255);
   // set the font size
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter your name :");
   TFTscreen.setTextSize(1);
   TFTscreen.text("Enter your name :\n ", 2, 2);
@@ -47,11 +45,11 @@ void setup() {
   while (Serial.available() == 0) {}
   nm = Serial.readString(); // take input from serial
   nm = "Hello " + nm;
+
   // convert the string to a char array
   nm.toCharArray(str, 100);
+
   //print the name
   TFTscreen.text(str, 0, 20);
-
 }
-
 void loop() {}

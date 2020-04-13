@@ -1,6 +1,6 @@
 /* TFTArc
   by K.Abhijeet
-  This example code takes input x,y(center co-ordinatesof arc ),r(radious),start angle,end angle from serial and prints the arc to the screen.
+  This example code takes input x, y(center coordinates of arc ), r(radius), start angle and end angle from serial and prints the arc to the screen.
 */
 
 #include <TFT.h>  // Arduino LCD library
@@ -34,37 +34,35 @@ void setup() {
   // set the font color to white
   TFTscreen.stroke(255, 255, 255);
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter x :");
   //waiting for input
   while (Serial.available() == 0) {}
   x = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter y :");
   //waiting for input
   while (Serial.available() == 0) {}
   y = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter r :");
   //waiting for input
   while (Serial.available() == 0) {}
   r = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter start angle :");
   //waiting for input
   while (Serial.available() == 0) {}
   st_angle = Serial.parseInt();
 
-
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter end angle :");
   //waiting for input
   while (Serial.available() == 0) {}
   end_angle = Serial.parseInt();
-
 
   TFTscreen.setTextSize(1);
   TFTscreen.text("Your Arc: ", 2, 0);

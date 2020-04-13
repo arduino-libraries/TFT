@@ -1,13 +1,10 @@
 /* TFTRect
 
   by K.Abhijeet
-
   This example code takes input length and width from serial and prints the rectangle to the screen.
 */
-
 #include <TFT.h>  // Arduino LCD library
 #include <SPI.h>
-
 
 // pin definition for the Uno
 #define cs   10
@@ -39,12 +36,13 @@ void setup() {
   // set the font color to white
   TFTscreen.stroke(255, 255, 255);
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter length :");
   //waiting for input
   while (Serial.available() == 0) {}
   len = Serial.parseInt();
 
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter width :");
   //waiting for input
   while (Serial.available() == 0) {}
@@ -56,5 +54,4 @@ void setup() {
   TFTscreen.fill(255, 255, 0);
   TFTscreen.rect(10, 20, len, wid); // draw rectangle
 }
-
 void loop() {}

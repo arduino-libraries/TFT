@@ -1,12 +1,11 @@
 /* TFTLine
 
   by K.Abhijeet
-  This example code takes input x1,y1(Initial co-ordinates to draw line)  and x2,y2(end co-ordinates to draw line) from serial and prints the line to the screen.
+  This example code takes input x1,y1(Initial coordinates to draw the line) and x2,y2(end co-ordinates to draw the line) from serial monitor and prints the line to the screen.
 */
 
 #include <TFT.h>  // Arduino LCD library
 #include <SPI.h>
-
 
 // pin definition for the Uno
 #define cs   10
@@ -22,7 +21,6 @@
 TFT TFTscreen = TFT(cs, dc, rst);
 int x1, y1, x2, y2;
 
-
 void setup() {
 
   Serial.begin(9600);
@@ -36,25 +34,25 @@ void setup() {
   // set the font color to white
   TFTscreen.stroke(255, 255, 255);
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter x1 :");
   //waiting for input
   while (Serial.available() == 0) {}
   x1 = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter y1 :");
   //waiting for input
   while (Serial.available() == 0) {}
   y1 = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter x2 :");
   //waiting for input
   while (Serial.available() == 0) {}
   x2 = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter y2 :");
   //waiting for input
   while (Serial.available() == 0) {}
@@ -62,9 +60,6 @@ void setup() {
 
   TFTscreen.setTextSize(1);
   TFTscreen.text("Your Line : ", 2, 0);
-
   TFTscreen.line(x1, y1, x2, y2);
-
 }
-
 void loop() {}

@@ -1,7 +1,7 @@
 /* TFTPointLine
 
   by K.Abhijeet
-  This example code takes input x1,y1(Initial co-ordinates to draw line)  and x2,y2(end co-ordinates to draw line) from serial and prints the line to the screen
+  This example code takes input x1,y1(Initial coordinates to draw the line) and x2,y2(end coordinates to draw the line) from serial monitor and prints the line to the screen
   by using bresenham’s line drawing algorithm.
 */
 
@@ -35,25 +35,25 @@ void setup() {
   // set the font color to white
   TFTscreen.stroke(255, 255, 255);
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter x1 :");
   //waiting for input
   while (Serial.available() == 0) {}
   x1 = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter y1 :");
   //waiting for input
   while (Serial.available() == 0) {}
   y1 = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter x2 :");
   //waiting for input
   while (Serial.available() == 0) {}
   x2 = Serial.parseInt();
 
-  // write the static text to the screen
+  // print text on the serial monitor to instruct user for the input
   Serial.println("Enter y2 :");
   //waiting for input
   while (Serial.available() == 0) {}
@@ -61,11 +61,8 @@ void setup() {
 
   TFTscreen.setTextSize(1);
   TFTscreen.text("Your Line : ", 2, 0);
-
   drawline(x1, y1, x2, y2);
-
 }
-
 void loop() {}
 
 void drawline(int x0, int y0, int x1, int y1)
