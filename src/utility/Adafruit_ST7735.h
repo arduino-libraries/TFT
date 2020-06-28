@@ -33,6 +33,8 @@
 #define INITR_GREENTAB 0x0
 #define INITR_REDTAB   0x1
 #define INITR_BLACKTAB   0x2
+#define INIT_B 0x3
+#define INIT_G 0x4
 
 #define ST7735_TFTWIDTH  128
 #define ST7735_TFTHEIGHT 160
