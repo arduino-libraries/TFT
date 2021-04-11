@@ -11,19 +11,19 @@
 
   Created 15 April 2013 by Scott Fitzgerald
 
-  http://www.arduino.cc/en/Tutorial/TFTDisplayText
+  https://www.arduino.cc/en/Tutorial/LibraryExamples/TFTDisplayText
 
  */
 
 #include <TFT.h>  // Arduino LCD library
 #include <SPI.h>
 
-// pin definition for the Uno
+// pin definitions for the Uno
 #define cs   10
 #define dc   9
 #define rst  8
 
-// pin definition for the Leonardo
+// pin definitions for the Leonardo
 // #define cs   7
 // #define dc   0
 // #define rst  1
@@ -49,7 +49,7 @@ void setup() {
   TFTscreen.setTextSize(2);
   // write the text to the top left corner of the screen
   TFTscreen.text("Sensor Value :\n ", 0, 0);
-  // ste the font size very large for the loop
+  // set the font size very large for the loop
   TFTscreen.setTextSize(5);
 }
 
@@ -71,4 +71,3 @@ void loop() {
   TFTscreen.stroke(0, 0, 0);
   TFTscreen.text(sensorPrintout, 0, 20);
 }
-

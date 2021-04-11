@@ -10,7 +10,7 @@
 
  Created 15 April 2013 by Scott Fitzgerald
 
- http://www.arduino.cc/en/Tutorial/TFTColorPicker
+ https://www.arduino.cc/en/Tutorial/LibraryExamples/TFTColorPicker
 
  */
 
@@ -39,7 +39,7 @@ void loop() {
   // change the background color based on the mapped values
   EsploraTFT.background(xValue, yValue, slider);
 
-  // print the mapped values to the Serial monitor
+  // print the mapped values to the Serial Monitor
   Serial.print("background(");
   Serial.print(xValue);
   Serial.print(" , ");
@@ -51,4 +51,3 @@ void loop() {
   delay(33);
 
 }
-

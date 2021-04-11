@@ -10,16 +10,16 @@
 
  Created 15 April 2013 by Scott Fitzgerald
 
- http://www.arduino.cc/en/Tutorial/TFTColorPicker
+ https://www.arduino.cc/en/Tutorial/LibraryExamples/TFTColorPicker
 
  */
 
-// pin definition for the Uno
+// pin definitions for the Uno
 #define cs   10
 #define dc   9
 #define rst  8
 
-// pin definition for the Leonardo
+// pin definitions for the Leonardo
 // #define cs   7
 // #define dc   0
 // #define rst  1
@@ -51,7 +51,7 @@ void loop() {
   // draw the background based on the mapped values
   TFTscreen.background(redVal, greenVal, blueVal);
 
-  // send the values to the serial monitor
+  // send the values to the Serial Monitor
   Serial.print("background(");
   Serial.print(redVal);
   Serial.print(" , ");
@@ -64,4 +64,3 @@ void loop() {
   delay(33);
 
 }
-

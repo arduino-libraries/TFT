@@ -13,7 +13,7 @@
  Created by Tom Igoe December 2012
  Modified 15 April 2013 by Scott Fitzgerald
 
- http://www.arduino.cc/en/Tutorial/EsploraTFTPong
+ https://www.arduino.cc/en/Tutorial/LibraryExamples/EsploraTFTPong
 
  */
 
@@ -36,7 +36,7 @@ void setup() {
 
   // initialize the display
   EsploraTFT.begin();
-  // set the background the black
+  // set the background to black
   EsploraTFT.background(0, 0, 0);
 }
 
@@ -67,7 +67,7 @@ void loop() {
   oldPaddleX = paddleX;
   oldPaddleY = paddleY;
 
-  // read the slider to determinde the speed of the ball
+  // read the slider to determine the speed of the ball
   int ballSpeed = map(Esplora.readSlider(), 0, 1023, 0, 80) + 1;
   if (millis() % ballSpeed < 2) {
     moveBall();
