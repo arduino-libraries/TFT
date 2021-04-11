@@ -1,4 +1,9 @@
-= TFT Library for Arduino =
+:repository-owner: arduino-libraries
+:repository-name: TFT
+
+= {repository-name} Library for Arduino =
+
+image:https://github.com/{repository-owner}/{repository-name}/actions/workflows/spell-check.yml/badge.svg["Spell Check status", link="https://github.com/{repository-owner}/{repository-name}/actions/workflows/spell-check.yml"]
 
 This library enables an Arduino board to communicate with the Arduino TFT LCD screen. It simplifies the process for drawing shapes, lines, images, and text to the screen. 
 
