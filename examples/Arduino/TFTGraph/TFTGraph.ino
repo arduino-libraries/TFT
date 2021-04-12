@@ -10,19 +10,19 @@
 
  Created 15 April 2013 by Scott Fitzgerald
 
- http://www.arduino.cc/en/Tutorial/TFTGraph
+ https://www.arduino.cc/en/Tutorial/LibraryExamples/TFTGraph
 
  */
 
 #include <TFT.h>  // Arduino LCD library
 #include <SPI.h>
 
-// pin definition for the Uno
+// pin definitions for the Uno
 #define cs   10
 #define dc   9
 #define rst  8
 
-// pin definition for the Leonardo
+// pin definitions for the Leonardo
 // #define cs   7
 // #define dc   0
 // #define rst  1
@@ -48,7 +48,7 @@ void loop() {
   int sensor = analogRead(A0);
   int drawHeight = map(sensor, 0, 1023, 0, TFTscreen.height());
 
-  // print out the height to the serial monitor
+  // print out the height to the Serial Monitor
   Serial.println(drawHeight);
 
   // draw a line in a nice color
@@ -67,4 +67,3 @@ void loop() {
 
   delay(16);
 }
-

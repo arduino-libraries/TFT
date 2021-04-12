@@ -15,7 +15,7 @@
 
  Created 19 April 2013 by Enrico Gueli
 
- http://www.arduino.cc/en/Tutorial/TFTBitmapLogo
+ https://www.arduino.cc/en/Tutorial/LibraryExamples/TFTBitmapLogo
 
  */
 
@@ -24,13 +24,13 @@
 #include <SD.h>
 #include <TFT.h>  // Arduino LCD library
 
-// pin definition for the Uno
+// pin definitions for the Uno
 #define sd_cs  4
 #define lcd_cs 10
 #define dc     9
 #define rst    8
 
-// pin definition for the Leonardo
+// pin definitions for the Leonardo
 //#define sd_cs  8
 //#define lcd_cs 7
 //#define dc     0
@@ -52,7 +52,7 @@ void setup() {
   TFTscreen.println();
   TFTscreen.println(F("Arduino TFT Bitmap Example"));
   TFTscreen.stroke(0, 0, 0);
-  TFTscreen.println(F("Open serial monitor"));
+  TFTscreen.println(F("Open Serial Monitor"));
   TFTscreen.println(F("to run the sketch"));
 
   // initialize the serial port: it will be used to
@@ -78,7 +78,7 @@ void setup() {
   TFTscreen.begin();
   TFTscreen.background(255, 255, 255);
 
-  // now that the SD card can be access, try to load the
+  // now that the SD card can be accessed, try to load the
   // image file.
   logo = TFTscreen.loadImage("arduino.bmp");
   if (!logo.isValid()) {
@@ -94,8 +94,8 @@ void loop() {
 
   Serial.println(F("drawing image"));
 
-  // get a random location where to draw the image.
-  // To avoid the image to be draw outside the screen,
+  // get a random location to draw the image at.
+  // To avoid the image being drawn outside the screen,
   // take into account the image size.
   int x = random(TFTscreen.width() - logo.width());
   int y = random(TFTscreen.height() - logo.height());

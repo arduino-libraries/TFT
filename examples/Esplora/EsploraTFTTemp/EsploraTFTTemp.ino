@@ -13,7 +13,7 @@
 
  Created 15 April 2013 by Scott Fitzgerald
 
- http://www.arduino.cc/en/Tutorial/EsploraTFTTemp
+ https://www.arduino.cc/en/Tutorial/LibraryExamples/EsploraTFTTemp
 
  */
 
@@ -46,7 +46,7 @@ void setup() {
 
 void loop() {
 
-  // read the temperature  in Celcius and store it in a String
+  // read the temperature in Celsius and store it in a String
   String temperature = String(Esplora.readTemperature(DEGREES_C));
 
   // convert the string to a char array

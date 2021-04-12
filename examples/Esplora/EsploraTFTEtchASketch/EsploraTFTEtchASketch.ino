@@ -11,7 +11,7 @@
 
  Created 15 April 2013 by Scott Fitzgerald
 
- http://www.arduino.cc/en/Tutorial/EsploraTFTEtchASketch
+ https://www.arduino.cc/en/Tutorial/LibraryExamples/EsploraTFTEtchASketch
 
  */
 
@@ -77,4 +77,3 @@ void loop() {
 
   delay(33);
 }
-

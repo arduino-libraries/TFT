@@ -12,19 +12,19 @@
  Created by Tom Igoe December 2012
  Modified 15 April 2013 by Scott Fitzgerald
 
- http://www.arduino.cc/en/Tutorial/TFTPong
+ https://www.arduino.cc/en/Tutorial/LibraryExamples/TFTPong
 
  */
 
 #include <TFT.h>  // Arduino LCD library
 #include <SPI.h>
 
-// pin definition for the Uno
+// pin definitions for the Uno
 #define cs   10
 #define dc   9
 #define rst  8
 
-// pin definition for the Leonardo
+// pin definitions for the Leonardo
 // #define cs   7
 // #define dc   0
 // #define rst  1
@@ -131,5 +131,3 @@ bool inPaddle(int x, int y, int rectX, int rectY, int rectWidth, int rectHeight)
 
   return result;
 }
-
-
