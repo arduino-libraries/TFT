@@ -140,7 +140,7 @@ class Adafruit_ST7735 : public Adafruit_GFX {
   SPISettings spisettings;
 #endif
 #if defined(ARDUINO_ARCH_SAM) || defined(__ARDUINO_ARC__) || \
-    defined(ARDUINO_ARCH_STM32)
+    defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_SAMD)
   volatile uint32_t *dataport, *clkport, *csport, *rsport;
   uint32_t  _cs, _rs, _rst, _sid, _sclk,
            datapinmask, clkpinmask, cspinmask, rspinmask,
