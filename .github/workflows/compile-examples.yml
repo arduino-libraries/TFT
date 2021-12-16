@@ -54,6 +54,10 @@ jobs:
           - fqbn: arduino:sam:arduino_due_x_dbg
             platforms: |
               - name: arduino:sam
+            type: arduino
+          - fqbn: arduino:samd:mkrzero
+            platforms: |
+              - name: arduino:samd
 
         # Make board type-specific customizations to the matrix jobs
         include:
