@@ -54,27 +54,6 @@ jobs:
           - fqbn: arduino:sam:arduino_due_x_dbg
             platforms: |
               - name: arduino:sam
-            type: arduino
-          - fqbn: arduino:samd:mkrzero
-            platforms: |
-              - name: arduino:samd
-            type: arduino
-          - fqbn: arduino:mbed_portenta:envie_m4
-            platforms: |
-              - name: arduino:mbed_portenta
-            type: arduino
-          - fqbn: arduino:mbed_portenta:envie_m7
-            platforms: |
-              - name: arduino:mbed_portenta
-            type: arduino
-          - fqbn: arduino:mbed_nano:nano33ble
-            platforms: |
-              - name: arduino:mbed_nano
-            type: arduino
-          - fqbn: arduino:mbed_nano:nanorp2040connect
-            platforms: |
-              - name: arduino:mbed_nano
-            type: arduino
 
         # Make board type-specific customizations to the matrix jobs
         include:
