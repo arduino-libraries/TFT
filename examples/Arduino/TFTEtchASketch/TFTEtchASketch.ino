@@ -39,6 +39,7 @@ int erasePin = 2;
 void setup() {
   // declare inputs
   pinMode(erasePin, INPUT);
+  digitalWrite(erasePin, HIGH);
   // initialize the screen
   TFTscreen.begin();
   // make the background black
@@ -51,8 +52,8 @@ void loop() {
   int yValue = analogRead(A1);
 
   // map the values and update the position
-  xPos = xPos + (map(xValue, 0, 1023, 2, -2));
-  yPos = yPos + (map(yValue, 0, 1023, -2, 2));
+  xPos = xPos + (map(xValue, 0, 1023, 2, -3));
+  yPos = yPos + (map(yValue, 0, 1023, -2, 3));
 
   // don't let the point go past the screen edges
   if (xPos > 159) {
@@ -75,7 +76,7 @@ void loop() {
   TFTscreen.point(xPos, yPos);
 
   // read the value of the pin, and erase the screen if pressed
-  if (digitalRead(erasePin) == HIGH) {
+  if (digitalRead(erasePin) == LOW) {
     TFTscreen.background(0, 0, 0);
   }
 
