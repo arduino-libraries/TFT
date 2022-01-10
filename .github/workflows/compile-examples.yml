@@ -58,6 +58,7 @@ jobs:
           - fqbn: arduino:samd:mkrzero
             platforms: |
               - name: arduino:samd
+            type: arduino
 
         # Make board type-specific customizations to the matrix jobs
         include:
