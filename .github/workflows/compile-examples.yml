@@ -59,6 +59,11 @@ jobs:
             platforms: |
               - name: arduino:samd
             type: arduino
+          - fqbn: STMicroelectronics:stm32:Nucleo_64:pnum=NUCLEO_L476RG
+            platforms: |
+              - source-url: https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
+                name: STMicroelectronics:stm32
+            type: arduino
 
         # Make board type-specific customizations to the matrix jobs
         include:
