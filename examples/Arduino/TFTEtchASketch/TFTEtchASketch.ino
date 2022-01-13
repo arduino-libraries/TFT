@@ -39,7 +39,6 @@ int erasePin = 2;
 void setup() {
   // declare inputs
   pinMode(erasePin, INPUT);
-  digitalWrite(erasePin, HIGH);
   // initialize the screen
   TFTscreen.begin();
   // make the background black
