@@ -75,7 +75,6 @@ void loop() {
   TFTscreen.point(xPos, yPos);
 
   // read the value of the pin, and erase the screen if pressed
-  if (digitalRead(erasePin) == LOW) {
     TFTscreen.background(0, 0, 0);
   }
 
