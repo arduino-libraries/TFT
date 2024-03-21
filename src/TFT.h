@@ -48,6 +48,7 @@ public:
   TFT(uint8_t CS, uint8_t RS, uint8_t RST);
 
   void begin();  
+  void begin(uint8_t init_opt);
 };
 
 /// Esplora boards have hard-wired connections with
