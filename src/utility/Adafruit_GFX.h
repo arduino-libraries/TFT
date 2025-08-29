@@ -60,7 +60,7 @@
  #warning "The SD library was not found. loadImage() and image() won't be supported."
 #endif
 
-inline void swap(int16_t &a, int16_t &b) { int16_t t = a; a = b; b = t; }
+#define swap(a, b) { int16_t t = a; a = b; b = t; }
 
 /* TODO
 enum RectMode {
@@ -125,7 +125,8 @@ class Adafruit_GFX : public Print {
 	setTextColor(uint16_t c, uint16_t bg),
 	setTextSize(uint8_t s),
 	setTextWrap(boolean w),
-	setRotation(uint8_t r);
+	setRotation(uint8_t r),
+  drawArc(int16_t x, int16_t y, int16_t r, int16_t st_angle, int16_t end_angle,uint16_t color);
 
 #if ARDUINO >= 100
   virtual size_t write(uint8_t);
@@ -185,8 +186,8 @@ class Adafruit_GFX : public Print {
 	quad(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t x3, int16_t y3, int16_t x4, int16_t y4),
 rect(int16_t x, int16_t y, int16_t width, int16_t height),
 	rect(int16_t x, int16_t y, int16_t width, int16_t height, int16_t radius),
-	triangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t x3, int16_t y3);
-  
+	triangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, int16_t x3, int16_t y3),
+  arc(int16_t x, int16_t y, int16_t r, int16_t st_angle, int16_t end_angle);
   /* TODO
   void rectMode(RectMode mode);
   
