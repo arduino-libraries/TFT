@@ -109,6 +109,7 @@ class Adafruit_ST7735 : public Adafruit_GFX {
            pushColor(uint16_t color),
            fillScreen(uint16_t color),
            drawPixel(int16_t x, int16_t y, uint16_t color),
+           drawArc(int16_t x, int16_t y, int16_t r, int16_t st_angle, int16_t end_angle,uint16_t color),
            drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color),
            drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color),
            fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
