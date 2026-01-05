@@ -58,3 +58,13 @@ void TFT::begin() {
   initG();
   setRotation(1);
 }
+
+void TFT::begin(uint8_t init_opt) {
+  if(init_opt == INIT_B) initB();
+  else if (init_opt == INIT_G) initG();
+  else if (init_opt == INITR_REDTAB) initR(INITR_REDTAB);
+  else if (init_opt == INITR_BLACKTAB) initR(INITR_BLACKTAB);
+  else if (init_opt == INITR_GREENTAB) initR(INITR_GREENTAB);
+
+  setRotation(1);
+}
