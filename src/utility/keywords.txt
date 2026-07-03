@@ -41,6 +41,8 @@ height	KEYWORD2
 width	KEYWORD2
 setRotation	KEYWORD2
 getRotation	KEYWORD2
+drawArc  KEYWORD2
+arc KEYWORD2
 
 
 
